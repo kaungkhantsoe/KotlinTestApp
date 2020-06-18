@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HolidayTestApp</string>
+
+    <string name="youAreNotUpdatedTitle">Update Available</string>
+    <string name="youAreNotUpdatedMessage">A new version is available. Please update to version</string>
+    <string name="update">Update</string>
+</resources>
