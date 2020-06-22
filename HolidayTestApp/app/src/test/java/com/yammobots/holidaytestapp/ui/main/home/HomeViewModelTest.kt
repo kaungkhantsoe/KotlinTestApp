@@ -35,7 +35,7 @@ class HomeViewModelTest {
     private lateinit var homeRepository: HomeRepository
 
     @BeforeEach
-    private fun initBeforeEach() {
+    internal fun initBeforeEach() {
         MockitoAnnotations.initMocks(this)
         homeViewModel = HomeViewModel(homeRepository)
     }

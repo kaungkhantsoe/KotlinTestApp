@@ -29,7 +29,7 @@ class HomeRepositoryTest {
     private lateinit var homeApi: HomeApi
 
     @BeforeEach
-    internal fun initBeforeEach() {
+    private fun initBeforeEach() {
         MockitoAnnotations.initMocks(this)
         homeRepository = HomeRepository(homeApi)
     }
