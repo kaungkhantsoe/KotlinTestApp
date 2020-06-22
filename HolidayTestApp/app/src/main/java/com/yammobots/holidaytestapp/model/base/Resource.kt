@@ -4,11 +4,7 @@ package com.yammobots.holidaytestapp.model.base
  * Created by kaungkhantsoe on 17/06/2020.
  **/
 
-
-class Resource<T>(status: Status, data: T, message: String) {
-    val status: Status
-    val data: T
-    val message: String
+class Resource<T>(val status: Status, val data: T, val message: String) {
 
     enum class Status {
         SUCCESS, ERROR, LOADING
@@ -28,9 +24,29 @@ class Resource<T>(status: Status, data: T, message: String) {
         }
     }
 
-    init {
-        this.status = status
-        this.data = data
-        this.message = message
+
+    override fun equals(other: Any?): Boolean {
+
+        if (other == null)
+            return false
+
+
+        if (javaClass != other.javaClass)
+            return false
+
+        val resource = other as Resource<T>
+
+        if (this.status != resource.status)
+            return false
+
+        if (this.data != null)
+            if (this.data != resource.data)
+                return false
+
+        if (this.message != resource.message)
+            return false
+
+        return true
     }
+
 }

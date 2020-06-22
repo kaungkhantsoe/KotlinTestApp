@@ -12,6 +12,7 @@ import com.bumptech.glide.RequestManager
 import com.yammobots.holidaytestapp.R
 import com.yammobots.holidaytestapp.common.BaseAdapter
 import com.yammobots.holidaytestapp.model.PhotoModel
+import com.yammobots.holidaytestapp.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.item_photo.view.*
 
 /**
@@ -46,7 +47,6 @@ class HomeAdapter(var requestManager: RequestManager) : BaseAdapter() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
         val context : Context = itemView.context
 
         fun bindView(model : PhotoModel) {
@@ -55,6 +55,10 @@ class HomeAdapter(var requestManager: RequestManager) : BaseAdapter() {
                 .into(itemView.iv_image)
 
             itemView.tv_title.setMyanmarText(model.title)
+
+            itemView.setOnClickListener {
+                context.startActivity(DetailActivity.getIntent(context,model))
+            }
         }
     }
 

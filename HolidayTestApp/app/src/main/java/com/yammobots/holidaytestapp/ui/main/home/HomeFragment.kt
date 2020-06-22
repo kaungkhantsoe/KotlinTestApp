@@ -1,7 +1,6 @@
 package com.yammobots.holidaytestapp.ui.main.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.yammobots.holidaytestapp.R
 import com.yammobots.holidaytestapp.common.BaseFragment
-import com.yammobots.holidaytestapp.common.Pageable
-import com.yammobots.holidaytestapp.model.PhotoModel
-import com.yammobots.holidaytestapp.model.base.Resource
+import com.yammobots.holidaytestapp.model.base.Resource.Status.*
 import com.yammobots.holidaytestapp.viewmodels.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
@@ -49,6 +46,8 @@ class HomeFragment : BaseFragment() {
         recycler.layoutManager = LinearLayoutManager(mContext,RecyclerView.VERTICAL,false)
         recycler.adapter = adapter
 
+        viewModel.albumId = 2
+
         subscribePhotos()
     }
 
@@ -58,16 +57,16 @@ class HomeFragment : BaseFragment() {
         viewModel.observePhotos()
             .observe(this, Observer { resource ->
                 when (resource.status) {
-                    Resource.Status.ERROR -> {
+                    ERROR -> {
                         adapter.clearFooter()
                         showToastMsg(resource.message)
                     }
 
-                    Resource.Status.LOADING -> {
+                    LOADING -> {
                         adapter.showLoading()
                     }
 
-                    Resource.Status.SUCCESS -> {
+                    SUCCESS -> {
                         adapter.clearFooter()
                         adapter.add(resource.data.toList())
                     }

@@ -62,24 +62,24 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
         }
     }
 
-//    protected void setupToolbarColored(boolean isChild) {
-//
-//        if (toolbar != null)
-//            setSupportActionBar(toolbar);
-//
-//        if (isChild) {
-//            if (getSupportActionBar() != null) {
-//
-//                /*final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-//                upArrow.setColorFilter(getResources().getColor(R.color.colorTextColorPrimary), PorterDuff.Mode.SRC_ATOP);
-//                getSupportActionBar().setHomeAsUpIndicator(upArrow);*/
-//
-//
-//                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                toolbar.setNavigationIcon(R.drawable.ic_back_red);
-//            }
-//        }
-//    }
+    protected void setupToolbarColored(boolean isChild) {
+
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
+
+        if (isChild) {
+            if (getSupportActionBar() != null) {
+
+                /*final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+                upArrow.setColorFilter(getResources().getColor(R.color.colorTextColorPrimary), PorterDuff.Mode.SRC_ATOP);
+                getSupportActionBar().setHomeAsUpIndicator(upArrow);*/
+
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                toolbar.setNavigationIcon(R.drawable.ic_back_blue);
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {

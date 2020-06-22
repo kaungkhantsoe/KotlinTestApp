@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(val homeRepository: HomeRepository) : ViewModel() {
 
+    var albumId: Int = 0
     lateinit var mediatorLiveData: MediatorLiveData<Resource<ArrayList<PhotoModel>>>
 
     fun observePhotos() : MediatorLiveData<Resource<ArrayList<PhotoModel>>> {
@@ -24,8 +25,9 @@ class HomeViewModel @Inject constructor(val homeRepository: HomeRepository) : Vi
         mediatorLiveData.value = Resource.loading(ArrayList())
 
         val source = LiveDataReactiveStreams.fromPublisher(
-            this.homeRepository.getPhotos()
+            this.homeRepository.getPhotos(albumId)
         )
+
 
         mediatorLiveData.addSource(source, Observer { resource ->
             mediatorLiveData.value = resource

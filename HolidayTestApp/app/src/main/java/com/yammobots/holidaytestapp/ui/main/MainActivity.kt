@@ -13,17 +13,17 @@ import com.yammobots.holidaytestapp.ui.main.posts.PostsFragment
 import com.yammobots.holidaytestapp.ui.main.users.UsersFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), MainDelegate {
 
-    val HOME_FRAGMENT = "home"
+    private val HOME_FRAGMENT = "home"
 
-    val USERS_FRAGMENT = "users"
+    private val USERS_FRAGMENT = "users"
 
-    val POSTS_FRAGMENT = "posts"
+    private val POSTS_FRAGMENT = "posts"
 
-    val DINING_FRAGMENT = "dining"
+    private val DINING_FRAGMENT = "dining"
 
-    lateinit var fragmentToShow : Fragment
+    private lateinit var fragmentToShow : Fragment
 
     override fun getLayoutResource(): Int {
         return R.layout.activity_main
