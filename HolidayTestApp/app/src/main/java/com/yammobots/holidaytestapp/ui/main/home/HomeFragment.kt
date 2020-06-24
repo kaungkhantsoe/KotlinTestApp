@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestManager
 import com.yammobots.holidaytestapp.R
 import com.yammobots.holidaytestapp.common.BaseFragment
 import com.yammobots.holidaytestapp.model.base.Resource.Status.*
+import com.yammobots.holidaytestapp.util.SmartScrollListener
 import com.yammobots.holidaytestapp.viewmodels.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
@@ -17,7 +18,7 @@ import javax.inject.Inject
  * Created by kaungkhantsoe on 13/06/2020.
  **/
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), SmartScrollListener.OnSmartScrollListener {
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
@@ -26,12 +27,18 @@ class HomeFragment : BaseFragment() {
     lateinit var requestManager: RequestManager
 
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelProviderFactory).get(HomeViewModel::class.java)
+        ViewModelProvider(this, viewModelProviderFactory).get(HomeViewModel::class.java)
     }
 
     private val adapter by lazy {
         HomeAdapter(requestManager)
     }
+
+    private val smartScrollListener by lazy {
+        SmartScrollListener(this)
+    }
+
+    private var albumId = 1
 
     override fun getLayoutResource(): Int {
         return R.layout.fragment_home
@@ -39,20 +46,19 @@ class HomeFragment : BaseFragment() {
 
     override fun setUpContents(savedInstanceState: Bundle?) {
 
-//        viewModel = ViewModelProvider(this,viewModelProviderFactory).get(HomeViewModel::class.java)
-//        adapter = HomeAdapter(requestManager)
-
         recycler.setHasFixedSize(true)
-        recycler.layoutManager = LinearLayoutManager(mContext,RecyclerView.VERTICAL,false)
+        recycler.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
         recycler.adapter = adapter
+        recycler.addOnScrollListener(smartScrollListener)
 
-        viewModel.albumId = 2
+        viewModel.albumId = albumId
 
         subscribePhotos()
     }
 
     private fun subscribePhotos() {
-        adapter.clear()
+        if (albumId == 1)
+            adapter.clear()
 
         viewModel.observePhotos()
             .observe(this, Observer { resource ->
@@ -63,14 +69,25 @@ class HomeFragment : BaseFragment() {
                     }
 
                     LOADING -> {
-                        adapter.showLoading()
+                        if (albumId == 1)
+                            adapter.showLoading()
                     }
 
                     SUCCESS -> {
                         adapter.clearFooter()
-                        adapter.add(resource.data.toList())
+                        adapter.submitList(
+                            resource.data.toList(),
+                            HomeDiffUtil(adapter.itemsList, resource.data)
+                        )
+//                        adapter.add(resource.data.toList())
                     }
                 }
             })
+    }
+
+    override fun onListEndReach() {
+        albumId++
+        viewModel.albumId = albumId
+        subscribePhotos()
     }
 }

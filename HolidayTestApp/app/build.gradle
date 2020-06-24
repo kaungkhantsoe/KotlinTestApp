@@ -170,5 +170,8 @@ dependencies {
     // Bottom Navigation
     def bottom_nav_view_version = "2.3.4"
     implementation "com.aurelhubert:ahbottomnavigation:$bottom_nav_view_version"
+
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 }
 

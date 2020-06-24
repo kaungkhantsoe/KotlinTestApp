@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -137,6 +138,15 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
         } else {
             throw new ArrayIndexOutOfBoundsException("Inserted position most greater than 0 and less than data size");
         }
+    }
+
+    public final <T extends BaseDiffUtil> void submitList(List<Pageable> newList, T diffUtil) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
+                diffUtil
+        );
+
+        itemsList = newList;
+        diffResult.dispatchUpdatesTo(this);
     }
 
     /**

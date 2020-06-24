@@ -19,7 +19,7 @@ class HomeRepository @Inject constructor(private val homeApi: HomeApi){
         val ALBUM_ID_CANNOT_BE_ZERO_ERROR = "Album id must be greater than zero"
     }
 
-    fun getPhotos(albumId: Int) : Flowable<Resource<ArrayList<PhotoModel>>> {
+    fun getPhotos(albumId: Int, list: ArrayList<PhotoModel>) : Flowable<Resource<ArrayList<PhotoModel>>> {
 
         checkId(albumId)
 
@@ -38,6 +38,11 @@ class HomeRepository @Inject constructor(private val homeApi: HomeApi){
                 if (photoModels[0].id == -1)
                     return@map Resource.error(CONNECTION_OR_SERVER_ERROR, ArrayList<PhotoModel>())
 
+                if (list.size > 0) {
+                    list.addAll(photoModels)
+                    val combineList = list
+                    return@map Resource.success(combineList)
+                }
 
                 return@map Resource.success(photoModels)
             }

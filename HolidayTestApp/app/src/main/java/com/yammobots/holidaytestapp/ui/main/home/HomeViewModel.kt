@@ -1,9 +1,8 @@
 package com.yammobots.holidaytestapp.ui.main.home
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.yammobots.holidaytestapp.model.PhotoModel
 import com.yammobots.holidaytestapp.model.base.Resource
@@ -16,26 +15,37 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(val homeRepository: HomeRepository) : ViewModel() {
 
+    private val TAG = "HomeViewModel"
+
     var albumId: Int = 0
-    lateinit var mediatorLiveData: MediatorLiveData<Resource<ArrayList<PhotoModel>>>
+    private lateinit var mediatorLiveData: MediatorLiveData<Resource<ArrayList<PhotoModel>>>
+    private lateinit var photoList :ArrayList<PhotoModel> // For pagination
 
-    fun observePhotos() : MediatorLiveData<Resource<ArrayList<PhotoModel>>> {
+    fun observePhotos(): MediatorLiveData<Resource<ArrayList<PhotoModel>>> {
 
-        mediatorLiveData = MediatorLiveData()
+        if (albumId == 1) {
+            photoList = ArrayList()
+            mediatorLiveData = MediatorLiveData()
+        }
+
         mediatorLiveData.value = Resource.loading(ArrayList())
 
         val source = LiveDataReactiveStreams.fromPublisher(
-            this.homeRepository.getPhotos(albumId)
+            this.homeRepository.getPhotos(albumId,photoList)
         )
 
+        mediatorLiveData.addSource(source) { resource ->
 
-        mediatorLiveData.addSource(source, Observer { resource ->
+            photoList = resource.data
             mediatorLiveData.value = resource
             mediatorLiveData.removeSource(source)
-        })
+
+            Log.e(TAG, "observePhotos: livedata " + mediatorLiveData.value!!.data.size  )
+            Log.e(TAG, "observePhotos: list " + photoList.size )
+
+        }
 
         return mediatorLiveData
-
     }
 
 }

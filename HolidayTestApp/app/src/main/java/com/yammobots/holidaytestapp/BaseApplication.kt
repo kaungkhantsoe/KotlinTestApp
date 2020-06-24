@@ -4,6 +4,7 @@ import com.yammobots.holidaytestapp.custom_control.AndroidCommonSetup
 import com.yammobots.holidaytestapp.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
+import leakcanary.LeakCanary
 
 /**
  * Created by kaungkhantsoe on 13/06/2020.
