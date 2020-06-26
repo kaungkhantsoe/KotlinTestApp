@@ -63,6 +63,7 @@ class HomeFragment : BaseFragment(), SmartScrollListener.OnSmartScrollListener {
         viewModel.observePhotos()
             .observe(this, Observer { resource ->
                 when (resource.status) {
+
                     ERROR -> {
                         adapter.clearFooter()
                         showToastMsg(resource.message)

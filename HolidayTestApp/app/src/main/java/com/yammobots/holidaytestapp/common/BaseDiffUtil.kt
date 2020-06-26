@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
  */
 abstract class BaseDiffUtil : DiffUtil.Callback() {
 
+    // Variables to be implemented by child class as constructor
     abstract var mOldItemList: List<Pageable>?
     abstract var mNewItemList: List<Pageable>?
 
+    // Function to be implemented by child class
     protected abstract fun areTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean
 
     override fun getOldListSize(): Int {

@@ -40,8 +40,7 @@ class HomeRepository @Inject constructor(private val homeApi: HomeApi){
 
                 if (list.size > 0) {
                     list.addAll(photoModels)
-                    val combineList = list
-                    return@map Resource.success(combineList)
+                    return@map Resource.success(list)
                 }
 
                 return@map Resource.success(photoModels)

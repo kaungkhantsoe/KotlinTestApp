@@ -140,6 +140,13 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
         }
     }
 
+    /**
+     * Add new list of items by checking difference between new and old list. For pagination, newList should be combine list of new and old list.
+     *
+     * @param newList       List of items to be added
+     * @param diffUtil      DiffUtil to compare new and old list
+     * @param <T>           Custom DiffUtil class
+     */
     public final <T extends BaseDiffUtil> void submitList(List<Pageable> newList, T diffUtil) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
                 diffUtil
