@@ -35,6 +35,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Solution for
+    // " test method not found " error when running unit test methods individually
+    // but okay when running the whole class
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -85,6 +94,8 @@ dependencies {
     def junit_jupiter_version = "5.3.2"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_jupiter_version"
+
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junit_jupiter_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version"
 
     // -------- MOCKITO
@@ -93,7 +104,6 @@ dependencies {
 
     def mockito_inline_version = "2.13.0"
     testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
-
 
     // Androidx
     def card_view_version = "1.0.0"
@@ -141,6 +151,9 @@ dependencies {
     // RxJava
     def rxjava_version = '2.2.6'
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    def rxandroid_version = '2.1.1'
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
     // Rx-Retrofit Call Adapter
     def rxcalladapter_version = '2.5.0'

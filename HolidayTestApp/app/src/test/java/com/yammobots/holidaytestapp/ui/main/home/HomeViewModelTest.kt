@@ -6,6 +6,7 @@ import com.yammobots.holidaytestapp.repository.main.home.HomeRepository
 import com.yammobots.holidaytestapp.repository.main.home.HomeRepository.Companion.ALBUM_ID_CANNOT_BE_ZERO_ERROR
 import com.yammobots.holidaytestapp.util.InstantExecutorExtension
 import com.yammobots.holidaytestapp.util.TestUtil
+import com.yammobots.holidaytestapp.util.TestUtil.EMPTY_LIST
 import com.yammobots.holidaytestapp.util.getOrAwaitValue
 import io.reactivex.Flowable
 import org.junit.jupiter.api.Assertions
@@ -43,39 +44,39 @@ class HomeViewModelTest {
     @Test
     internal fun getPhoto_returnData() {
 
-//        // Arrange
-//        val listResource = Resource.success(ArrayList(TestUtil.PHOTO_MODEL_LIST))
-//        val returnedData = Flowable.just(listResource)
-//
-//        `when`(homeRepository.getPhotos(anyInt())).thenReturn(returnedData)
-//
-//        homeViewModel.albumId = 1
-//        // Act
-//        val returnedValue = homeViewModel.observePhotos().getOrAwaitValue()
-//
-//        // Assert
-//        verify(homeRepository).getPhotos(anyInt())
-//        assertEquals(listResource,returnedValue)
+        // Arrange
+        val listResource = Resource.success(ArrayList(TestUtil.PHOTO_MODEL_LIST))
+        val returnedData = Flowable.just(listResource)
+
+        `when`(homeRepository.getPhotos(anyInt(), anyCollection<PhotoModel>() as ArrayList<PhotoModel>)).thenReturn(returnedData)
+
+        homeViewModel.albumId = 1
+        // Act
+        val returnedValue = homeViewModel.observePhotos().getOrAwaitValue()
+
+        // Assert
+        verify(homeRepository).getPhotos(anyInt(), anyCollection<PhotoModel>() as ArrayList<PhotoModel>)
+        assertEquals(listResource,returnedValue)
     }
 
 
     @Test
     internal fun getPhotoWithAlbumIdZero_returnError() {
 
-//        // Arrange
-//        val listResource = Resource.error(ALBUM_ID_CANNOT_BE_ZERO_ERROR,ArrayList<PhotoModel>())
-//        val returnedData = Flowable.just(listResource)
-//
-//        `when`(homeRepository.getPhotos(anyInt())).thenReturn(returnedData)
-//
-//        homeViewModel.albumId = 0
-//
-//        // Act
-//        val returnedValue = homeViewModel.observePhotos().getOrAwaitValue()
-//
-//        // Assert
-//        verify(homeRepository).getPhotos(anyInt())
-//        assertEquals(listResource,returnedValue)
+        // Arrange
+        val listResource = Resource.error(ALBUM_ID_CANNOT_BE_ZERO_ERROR,ArrayList<PhotoModel>())
+        val returnedData = Flowable.just(listResource)
+
+        `when`(homeRepository.getPhotos(anyInt(), anyCollection<PhotoModel>() as ArrayList<PhotoModel>)).thenReturn(returnedData)
+
+        homeViewModel.albumId = 0
+
+        // Act
+        val returnedValue = homeViewModel.observePhotos().getOrAwaitValue()
+
+        // Assert
+        verify(homeRepository).getPhotos(anyInt(), anyCollection<PhotoModel>() as ArrayList<PhotoModel>)
+        assertEquals(listResource,returnedValue)
     }
 
 

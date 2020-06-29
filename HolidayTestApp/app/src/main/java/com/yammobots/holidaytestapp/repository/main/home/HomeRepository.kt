@@ -1,5 +1,6 @@
 package com.yammobots.holidaytestapp.repository.main.home
 
+import android.util.Log
 import com.yammobots.holidaytestapp.model.PhotoModel
 import com.yammobots.holidaytestapp.model.base.Resource
 import com.yammobots.holidaytestapp.network.HomeApi
@@ -14,6 +15,8 @@ import javax.inject.Inject
  **/
 
 class HomeRepository @Inject constructor(private val homeApi: HomeApi){
+
+    private val TAG = "HomeRepository"
 
     companion object {
         val ALBUM_ID_CANNOT_BE_ZERO_ERROR = "Album id must be greater than zero"
@@ -31,6 +34,7 @@ class HomeRepository @Inject constructor(private val homeApi: HomeApi){
                 val dummyList = ArrayList<PhotoModel>()
                 val photoModel = PhotoModel()
                 photoModel.id = -1
+                dummyList.add(photoModel)
                 return@Function dummyList
             })
 
